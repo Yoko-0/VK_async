@@ -2,15 +2,15 @@ from async_vk_lib.cog import *
 
 
 
-class MyCog(Cog):
+class Example_data_class():
     def __init__(self):
         self.text = 'asdasdasd'
 
-my_cog = MyCog()
+cla = Example_data_class()
 
 @cog.command(name = 'asd')
 async def test(ctx):
-    print(my_cog.text)
+    print(cla.text)
 
 
 def setup(bot):

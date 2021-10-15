@@ -18,7 +18,6 @@ class Ctx:
         self.bot = bot
         self.message = msg
 
-
 class Async_vk:
     def __init__(self, token, version = 5.131):
         # подключение к API
