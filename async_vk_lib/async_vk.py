@@ -1,6 +1,7 @@
 import aiohttp
 import asyncio
-import json
+import json, sys
+import importlib
 from random import randint
 from threading import Thread
 
@@ -35,6 +36,7 @@ class Async_vk:
         self.events = []
         self.listeners = []
         self.commands = []
+        self.__extensions = {}
 
     # методы для старта работы
     def run_bot(self, group_id):
@@ -157,3 +159,52 @@ class Async_vk:
             self.commands.append(new_command)
             return wrapper
         return decorator
+
+    def add_cog(self, cog):
+        self.commands += cog.commands
+
+    def load_extension(self, name, *, package = None):
+        name = self._resolve_name(name, package)
+        if name in self.__extensions:
+            print(f'Error Extension Already Loaded {name}')
+            return
+
+        spec = importlib.util.find_spec(name)
+        if spec is None:
+            print(f'Error Extension Not Found {name}')
+            return
+
+        self._load_from_module_spec(spec, name)
+
+    def _resolve_name(self, name, package):
+        try:
+            return importlib.util.resolve_name(name, package)
+        except ImportError:
+            print(f'Error Extension Not Found {name}')
+            return
+
+    def _load_from_module_spec(self, spec, key):
+        # precondition: key not in self.__extensions
+        lib = importlib.util.module_from_spec(spec)
+        sys.modules[key] = lib
+        try:
+            spec.loader.exec_module(lib)
+        except Exception as e:
+            del sys.modules[key]
+            raise errors.ExtensionFailed(key, e) from e
+
+        try:
+            setup = getattr(lib, 'setup')
+        except AttributeError:
+            del sys.modules[key]
+            raise errors.NoEntryPointError(key)
+
+        try:
+            setup(self)
+        except Exception as e:
+            del sys.modules[key]
+            self._remove_module_references(lib.__name__)
+            self._call_module_finalizers(lib, key)
+            raise errors.ExtensionFailed(key, e) from e
+        else:
+            self.__extensions[key] = lib
