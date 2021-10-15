@@ -24,7 +24,16 @@ class Async_vk:
         self.ts = None
         self.events = []
         self.listeners = []
+
+
+    def run_bot(self, group_id):
+        asyncio.run(self.update_bot_longpool(group_id))
+        asyncio.run(self.start_loop())
+
+    async def start_loop(self):
         self.loop = asyncio.get_event_loop()
+        async for msg in self.listen():
+            self.dispatch(msg)
 
 
     async def method(self, method_name, args):
@@ -83,8 +92,9 @@ class Async_vk:
                     #{'user1' : ['event1', 'event2']}
                     new_events = [raw_event for raw_event in response['updates']]
                     new_events = filter(lambda event: event['type'] == 'message_new', new_events)
-                    new_events = list(map(lambda event: Msg(event['object']['message']), new_events))
-                    self.events += new_events
+                    for event in new_events:
+                        yield Msg(event['object']['message'])
+
 
                 elif response['failed'] == 1:
                     self.ts = response['ts']
@@ -95,29 +105,26 @@ class Async_vk:
                 elif response['failed'] == 3:
                     self.update_bot_longpool()
 
-        return []
+        # return []
 
 
     async def listen(self):
         """ Слушать сервер """
 
         while True:
-            await self.check()
-            for msg in self.events:
+            # await self.check()
+            async for msg in self.check():
                 yield msg
-                self.events.remove(msg)
+                # self.events.remove(msg)
 
 
 
-    async def wait_for(self, msg, check, timeout = 60):
+    async def wait_for(self, check, timeout = 60):
 
         future = self.loop.create_future()
         self.listeners.append((future, check))
         print(self.listeners)
         return await asyncio.wait_for(future, timeout)
-        # self.waiting_users.remove(msg.user_id)
-        #
-        # return result
 
 
 
@@ -130,7 +137,7 @@ class Async_vk:
                 return
 
         # else if no listeners
-        task = asyncio.create_task(self.on_message(msg))
+        asyncio.create_task(self.on_message(msg))
 
 
     async def on_message(self, msg):
@@ -141,7 +148,7 @@ class Async_vk:
                 return msg.user_id == user_id and msg.text == 'lol'
 
             await self.send_msg(msg.user_id, 'Жду лола')
-            msg = await self.wait_for(msg, check)
+            msg = await self.wait_for(check)
             print(msg)
             await self.send_msg(msg.user_id, 'HI')
 
