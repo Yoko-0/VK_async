@@ -10,20 +10,9 @@ async def main():
     longpool = await vk_api.update_bot_longpool(group_id)
 
     async for msg in vk_api.listen():
+        vk_api.dispatch(msg)
 
-        if msg.text == 'kek':
-            user_id = msg.user_id
 
-            def check(msg):
-                return msg.user_id == user_id and msg.text == 'lol'
-
-            await vk_api.send_msg(msg.user_id, 'Жду лола')
-            msg = await vk_api.wait_for(msg, check)
-            print(msg)
-            await vk_api.send_msg(msg.user_id, 'HI')
-
-        if msg.text == 'asd':
-            await vk_api.send_msg(msg.user_id, 'hue')
 
 
 
