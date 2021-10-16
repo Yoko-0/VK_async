@@ -45,17 +45,19 @@ class Async_vk:
             self.dispatch(ctx)
 
     # базовые методы
-    async def method(self, method_name, args):
+    async def method(self, method_name, args = None):
         base_url = self.base_url + method_name
-        params = {'access_token': self.token, 'v': self.version, **args}
+        params = {'access_token': self.token, 'v': self.version}
+        if args:
+            params = {**params, **args}
 
         async with aiohttp.ClientSession() as session:
             async with session.post(base_url, data = params) as resp:
                 response = await resp.json()
 
                 if 'error' in response.keys():
-                    print(f'Error in method {method_name} with error code {response["error"]["error_code"]}\nFull response {response}')
-                    raise Exception
+                    error = ApiError(method_name, {'error_msg': response, 'error_code': response["error"]["error_code"]})
+                    raise error
 
                 return response['response']
 

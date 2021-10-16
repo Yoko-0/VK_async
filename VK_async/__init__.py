@@ -7,6 +7,7 @@ from .async_vk import (Async_vk, Msg, Ctx)
 from .cog import Cog
 from .utils import *
 from .keyboard import VkKeyboard
+from .exception import ApiError
 
 
 __author__ = 'Yoko'
