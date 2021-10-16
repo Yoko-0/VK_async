@@ -3,6 +3,7 @@ import asyncio
 import json, sys
 import importlib
 from .utils import *
+from .exceptions import ApiError
 from threading import Thread
 
 class Msg:
@@ -145,7 +146,7 @@ class Async_vk:
     # методы работы команд
     async def on_message(self, ctx):
         for command in self.commands:
-            if ctx.message.text.startswith(command['name']):
+            if ctx.message.text.lower().startswith(command['name']):
                 await command['execute'](ctx)
 
     def command(self, name):
