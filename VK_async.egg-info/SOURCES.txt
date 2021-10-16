@@ -3,7 +3,7 @@ setup.py
 VK_async/__init__.py
 VK_async/async_vk.py
 VK_async/cog.py
-VK_async/keybord.py
+VK_async/keyboard.py
 VK_async/utils.py
 VK_async.egg-info/PKG-INFO
 VK_async.egg-info/SOURCES.txt
