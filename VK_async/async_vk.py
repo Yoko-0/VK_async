@@ -3,7 +3,7 @@ import asyncio
 import json, sys
 import importlib
 from .utils import *
-from .exceptions import ApiError
+from .exception import ApiError
 from threading import Thread
 
 class Msg:
