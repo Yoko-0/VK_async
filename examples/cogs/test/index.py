@@ -1,6 +1,6 @@
-from async_vk_lib.cog import *
+from async_vk_lib.cog import Cog
 
-
+cog = Cog()
 
 class Example_data_class():
     def __init__(self):

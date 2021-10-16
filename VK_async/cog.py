@@ -15,5 +15,3 @@ class Cog:
             self.commands.append(new_command)
             return wrapper
         return decorator
-
-cog = Cog()

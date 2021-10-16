@@ -2,11 +2,8 @@ import aiohttp
 import asyncio
 import json, sys
 import importlib
-from random import randint
+from .utils import *
 from threading import Thread
-
-def get_random_id():
-    return randint(1, 10000000)
 
 class Msg:
     def __init__(self, event):
@@ -162,6 +159,14 @@ class Async_vk:
     def add_cog(self, cog):
         self.commands += cog.commands
 
+    def get_command(self, name):
+        for command in self.commands:
+            if command['name'] == name:
+                return command
+        print(f'No command name {name}')
+        return
+
+    #работа с когами
     def load_extension(self, name, *, package = None):
         name = self._resolve_name(name, package)
         if name in self.__extensions:
@@ -190,13 +195,15 @@ class Async_vk:
             spec.loader.exec_module(lib)
         except Exception as e:
             del sys.modules[key]
-            raise errors.ExtensionFailed(key, e) from e
+            print(f'ExtensionFailed {key}')
+            return
 
         try:
             setup = getattr(lib, 'setup')
         except AttributeError:
             del sys.modules[key]
-            raise errors.NoEntryPointError(key)
+            print(f'NoEntryPointError {key}')
+            return
 
         try:
             setup(self)
@@ -204,6 +211,7 @@ class Async_vk:
             del sys.modules[key]
             self._remove_module_references(lib.__name__)
             self._call_module_finalizers(lib, key)
-            raise errors.ExtensionFailed(key, e) from e
+            print(f'ExtensionFailed {key}')
+            return
         else:
             self.__extensions[key] = lib

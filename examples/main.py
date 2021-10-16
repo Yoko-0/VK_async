@@ -4,8 +4,8 @@ import asyncio
 import os
 
 
-token = '927d0c2eb68bc3197ee29a3634b0de4466b1b66ec0cddbc76142138a1e1c8dc83f2b35fb8354e013c3a25'
-group_id = 195205545
+token = 'TOKEN'
+group_id = GROUP_ID
 bot = Async_vk(token)
 
 for dir in os.listdir('./cogs'):
@@ -14,18 +14,18 @@ for dir in os.listdir('./cogs'):
 
 @bot.command(name = 'test')
 async def test(ctx):
-    await ctx.bot.send(ctx.message.user_id, 'Дадова ебать, жду от тебя хуй')
+    await ctx.bot.send(ctx.message.user_id, 'Дадова ебать, жду от тебя "привет"')
     user_id = ctx.message.user_id
 
     def check(ctx):
-        return user_id == ctx.message.user_id and ctx.message.text == 'хуй'
+        return user_id == ctx.message.user_id and ctx.message.text == 'привет'
 
     try:
         ctx = await ctx.bot.wait_for(check, timeout = 10)
-        await ctx.bot.send(ctx.message.user_id, 'получил хуй')
+        await ctx.bot.send(ctx.message.user_id, 'получил привет')
 
     except asyncio.TimeoutError:
-        await ctx.bot.send(ctx.message.user_id, 'не дождался хуя')
+        await ctx.bot.send(ctx.message.user_id, 'не дождался привет')
 
 
 @bot.command(name = 'print')
@@ -34,6 +34,8 @@ async def test_print(ctx):
 
 @bot.command(name = 'hello')
 async def test_hello(ctx):
+    cmd = ctx.bot.get_command('hello')
+    await cmd(ctx)
     print(ctx)
 
 
