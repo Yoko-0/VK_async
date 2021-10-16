@@ -59,7 +59,7 @@ class Async_vk:
 
                 return response['response']
 
-    async def send(self, peer_id, msg, keyboard = None):
+    async def send(self, peer_id, msg, keyboard = None, attachment = None):
         base_url = self.base_url + 'messages.send'
         params = {'access_token': self.token,
                     'v': self.version,
@@ -68,6 +68,9 @@ class Async_vk:
                     'random_id': get_random_id(),}
         if keyboard:
             params['keyboard'] = keyboard
+
+        if attachment:
+            params['attachment'] = attachment
 
         async with aiohttp.ClientSession() as session:
             async with session.post(base_url, data=params) as resp:
