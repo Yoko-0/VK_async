@@ -42,6 +42,7 @@ class Async_vk:
 
     async def start_loop(self):
         self.loop = asyncio.get_event_loop()
+        print('Ready')
         async for ctx in self.listen():
             self.dispatch(ctx)
 
@@ -201,7 +202,7 @@ class Async_vk:
             spec.loader.exec_module(lib)
         except Exception as e:
             del sys.modules[key]
-            print(f'ExtensionFailed {key}')
+            print(f'ExtensionFailed {key}\n{e}')
             return
 
         try:
@@ -217,7 +218,7 @@ class Async_vk:
             del sys.modules[key]
             self._remove_module_references(lib.__name__)
             self._call_module_finalizers(lib, key)
-            print(f'ExtensionFailed {key}')
+            print(f'ExtensionFailed {key}\n{e}')
             return
         else:
             self.__extensions[key] = lib
