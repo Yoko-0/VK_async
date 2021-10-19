@@ -89,6 +89,8 @@ class Async_vk:
         if update_ts:
             self.ts = longpool['ts']
 
+        self.group_id = group_id
+
     async def check(self):
         """ Получить события от сервера один раз """
 
@@ -116,7 +118,7 @@ class Async_vk:
                     self.ts = response['ts']
 
                 elif response['failed'] == 2:
-                    self.update_bot_longpool(update_ts=False)
+                    self.update_bot_longpool(self.group_id, update_ts=False)
 
                 elif response['failed'] == 3:
                     self.update_bot_longpool()
