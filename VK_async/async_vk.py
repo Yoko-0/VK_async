@@ -118,10 +118,10 @@ class Async_vk:
                     self.ts = response['ts']
 
                 elif response['failed'] == 2:
-                    self.update_bot_longpool(self.group_id, update_ts=False)
+                    await self.update_bot_longpool(self.group_id, update_ts=False)
 
                 elif response['failed'] == 3:
-                    self.update_bot_longpool()
+                    await self.update_bot_longpool()
 
     async def listen(self):
         """ Слушать сервер """
