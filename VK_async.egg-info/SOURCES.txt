@@ -11,3 +11,13 @@ VK_async.egg-info/SOURCES.txt
 VK_async.egg-info/dependency_links.txt
 VK_async.egg-info/requires.txt
 VK_async.egg-info/top_level.txt
+VK_async/__pycache__/async_vk.cpython-39.pyc
+VK_async/__pycache__/cog.cpython-39.pyc
+VK_async/__pycache__/cogs.cpython-39.pyc
+VK_async/__pycache__/exception.cpython-39.pyc
+VK_async/__pycache__/utils.cpython-39.pyc
+__pycache__/async_vk.cpython-39.pyc
+examples/main.py
+examples/cogs/__pycache__/index.cpython-39.pyc
+examples/cogs/test/index.py
+examples/cogs/test/__pycache__/index.cpython-39.pyc

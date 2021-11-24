@@ -149,7 +149,8 @@ class Async_vk:
     # методы работы команд
     async def on_message(self, ctx):
         for command in self.commands:
-            if ctx.message.text.startswith(command['name']):
+            text_command = ctx.message.text.lower()
+            if text_command.startswith(command['name']):
                 await command['execute'](ctx)
 
     def command(self, name):

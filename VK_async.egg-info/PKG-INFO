@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: VK-async
-Version: 1.0.13
+Version: 1.0.14
 Summary: Python module for writing bots for VK(VK API wrapper)
 Home-page: https://github.com/Yoko-0/VK_async
 Author: Yoko
