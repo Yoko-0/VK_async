@@ -138,10 +138,13 @@ class Async_vk:
     def dispatch(self, ctx):
         # dispatch new event for listeners if has
         for listener in self.listeners:
-            if listener[1](ctx):
-                listener[0].set_result(ctx)
+            if not listener[0].cancelled():
+                if listener[1](ctx):
+                    listener[0].set_result(ctx)
+                    self.listeners.remove(listener)
+                    return
+            else:
                 self.listeners.remove(listener)
-                return
 
         # else if no listeners
         asyncio.create_task(self.on_message(ctx))
