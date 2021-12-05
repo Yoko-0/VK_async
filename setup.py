@@ -6,7 +6,7 @@ from setuptools import setup
 :copyright: (c) 2021 Yoko
 """
 
-version = '1.0.16'
+version = '1.0.17'
 
 long_description = '''Python lib for async requests to VK API with wait_for and cogs'''
 

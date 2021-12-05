@@ -63,13 +63,14 @@ class Async_vk:
 
                 return response['response']
 
-    async def send(self, peer_id, msg, keyboard = None, attachment = None):
+    async def send(self, peer_id, msg, keyboard = None, attachment = None, dont_parse_links = 0):
         base_url = self.base_url + 'messages.send'
         params = {'access_token': self.token,
                     'v': self.version,
                     'user_id': peer_id,
                     'message': msg,
-                    'random_id': get_random_id(),}
+                    'random_id': get_random_id(),
+                    'dont_parse_links': dont_parse_links}
         if keyboard:
             params['keyboard'] = keyboard
 
