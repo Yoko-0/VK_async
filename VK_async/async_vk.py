@@ -126,10 +126,12 @@ class Async_vk:
 
     async def listen(self):
         """ Слушать сервер """
-
-        while True:
-            async for ctx in self.check():
-                yield ctx
+        try:
+            while True:
+                async for ctx in self.check():
+                    yield ctx
+        except Exception as e:
+            print(f'Меня заминировали э\n{e}')
 
     async def wait_for(self, check, timeout = 60):
         future = self.loop.create_future()
