@@ -5,11 +5,15 @@ import importlib
 from .utils import *
 from .exception import ApiError
 from threading import Thread
+from pprint import pprint
 
 class Msg:
     def __init__(self, event):
         self.user_id = event['from_id']
         self.text = event['text']
+        self.fwd_messages = event.get('fwd_messages')
+        self.reply_message = event.get('reply_message')
+        self.attachments = event.get('attachments')
 
 class Ctx:
     def __init__(self, msg, bot):
