@@ -1,13 +1,12 @@
-Metadata-Version: 1.1
+Metadata-Version: 2.1
 Name: VK-async
-Version: 1.0.18
+Version: 1.1.0
 Summary: Python module for writing bots for VK(VK API wrapper)
 Home-page: https://github.com/Yoko-0/VK_async
 Author: Yoko
 Author-email: zartem01@gmail.ru
 License: UNKNOWN
 Download-URL: https://github.com/Yoko-0/VK_async.git
-Description: Python lib for async requests to VK API with wait_for and cogs
 Platform: UNKNOWN
 Classifier: Operating System :: OS Independent
 Classifier: Intended Audience :: End Users/Desktop
@@ -19,3 +18,6 @@ Classifier: Programming Language :: Python :: 3.7
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: Implementation :: PyPy
 Classifier: Programming Language :: Python :: Implementation :: CPython
+
+Python lib for async requests to VK API with wait_for and cogs
+
